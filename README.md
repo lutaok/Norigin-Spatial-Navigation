@@ -249,7 +249,8 @@ setKeyMap({
   'up': 9002,
   'right': 9003,
   'down': 9004,
-  'enter': 9005
+  'enter': 9005,
+  'back': 9006
 });
 ```
 

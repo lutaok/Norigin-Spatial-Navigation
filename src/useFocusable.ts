@@ -23,6 +23,11 @@ export type EnterPressHandler<P = object> = (
 
 export type EnterReleaseHandler<P = object> = (props: P) => void;
 
+export type BackPressHandler<P = object> = (
+  props: P,
+  details: KeyPressDetails
+) => void;
+
 export type ArrowPressHandler<P = object> = (
   direction: string,
   props: P,
@@ -51,6 +56,7 @@ export interface UseFocusableConfig<P = object> {
   preferredChildFocusKey?: string;
   onEnterPress?: EnterPressHandler<P>;
   onEnterRelease?: EnterReleaseHandler<P>;
+  onBackPress?: BackPressHandler<P>;
   onArrowPress?: ArrowPressHandler<P>;
   onFocus?: FocusHandler<P>;
   onBlur?: BlurHandler<P>;
@@ -80,6 +86,7 @@ const useFocusableHook = <P>({
   preferredChildFocusKey,
   onEnterPress = noop,
   onEnterRelease = noop,
+  onBackPress = noop,
   onArrowPress = () => true,
   onFocus = noop,
   onBlur = noop,
@@ -95,6 +102,13 @@ const useFocusableHook = <P>({
   const onEnterReleaseHandler = useCallback(() => {
     onEnterRelease(extraProps);
   }, [onEnterRelease, extraProps]);
+
+  const onBackPressHandler = useCallback(
+    (details: KeyPressDetails) => {
+      onBackPress(extraProps, details);
+    },
+    [onBackPress, extraProps]
+  );
 
   const onArrowPressHandler = useCallback(
     (direction: string, details: KeyPressDetails) =>
@@ -145,6 +159,7 @@ const useFocusableHook = <P>({
       preferredChildFocusKey,
       onEnterPress: onEnterPressHandler,
       onEnterRelease: onEnterReleaseHandler,
+      onBackPress: onBackPressHandler,
       onArrowPress: onArrowPressHandler,
       onFocus: onFocusHandler,
       onBlur: onBlurHandler,
@@ -175,6 +190,7 @@ const useFocusableHook = <P>({
       isFocusBoundary,
       onEnterPress: onEnterPressHandler,
       onEnterRelease: onEnterReleaseHandler,
+      onBackPress: onBackPressHandler,
       onArrowPress: onArrowPressHandler,
       onFocus: onFocusHandler,
       onBlur: onBlurHandler
@@ -186,6 +202,7 @@ const useFocusableHook = <P>({
     isFocusBoundary,
     onEnterPressHandler,
     onEnterReleaseHandler,
+    onBackPressHandler,
     onArrowPressHandler,
     onFocusHandler,
     onBlurHandler
