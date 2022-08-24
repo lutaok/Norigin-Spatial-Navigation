@@ -209,7 +209,6 @@ interface AssetProps {
   title: string;
   color: string;
   onEnterPress: (props: object, details: KeyPressDetails) => void;
-  onBackPress: (props: object, details: KeyPressDetails) => void;
   onFocus: (
     layout: FocusableComponentLayout,
     props: object,
@@ -217,16 +216,9 @@ interface AssetProps {
   ) => void;
 }
 
-function Asset({
-  title,
-  color,
-  onEnterPress,
-  onBackPress,
-  onFocus
-}: AssetProps) {
+function Asset({ title, color, onEnterPress, onFocus }: AssetProps) {
   const { ref, focused } = useFocusable({
     onEnterPress,
-    onBackPress,
     onFocus,
     extraProps: {
       title,
@@ -284,7 +276,10 @@ function ContentRow({
   onFocus
 }: ContentRowProps) {
   const { ref, focusKey, setFocus } = useFocusable({
-    onFocus
+    onFocus,
+    onBackPress: () => {
+      setFocus('MENU');
+    }
   });
 
   const scrollingRef = useRef(null);
@@ -299,10 +294,6 @@ function ContentRow({
     [scrollingRef]
   );
 
-  const onAssetBack = useCallback(() => {
-    setFocus('MENU');
-  }, [setFocus]);
-
   return (
     <FocusContext.Provider value={focusKey}>
       <ContentRowWrapper ref={ref}>
@@ -316,7 +307,6 @@ function ContentRow({
                 color={color}
                 onEnterPress={onAssetPress}
                 onFocus={onAssetFocus}
-                onBackPress={onAssetBack}
               />
             ))}
           </ContentRowScrollingContent>

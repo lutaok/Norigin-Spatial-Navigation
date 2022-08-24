@@ -110,7 +110,16 @@ const useFocusableHook = <P>({
 
   const onBackPressHandler = useCallback(
     (details: KeyPressDetails) => {
-      onBackPress(extraProps, details);
+      if (onBackPress === noop) {
+        try {
+          const parentComponent = SpatialNavigation.getParentComponent();
+          parentComponent.onBackPress(details);
+        } catch (e) {
+          noop();
+        }
+      } else {
+        onBackPress(extraProps, details);
+      }
     },
     [extraProps, onBackPress]
   );

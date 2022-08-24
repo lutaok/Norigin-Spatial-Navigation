@@ -307,6 +307,11 @@ Receives `extraProps` (see below) and `KeyPressDetails` as arguments.
 Callback that is called when the component is focused and Enter key is released.
 Receives `extraProps` (see below) as argument.
 
+##### `onBackPress` (function)
+Callback that is called when the component is focused and Back key is pressed.
+Children components that don't have it defined will find parent's `onBackPress` to invoke.
+Receives `extraProps` (see below) as argument.
+
 ##### `onArrowPress` (function)
 Callback that is called when component is focused and any Arrow key is pressed.
 Receives `direction` (`left`, `right`, `up`, `down`), `extraProps` (see below) and `KeyPressDetails` as arguments.

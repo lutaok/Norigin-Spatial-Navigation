@@ -1426,6 +1426,12 @@ class SpatialNavigationService {
   isNativeMode() {
     return this.nativeMode;
   }
+
+  getParentComponent(key: string = this.focusKey): FocusableComponent {
+    const component = this.focusableComponents[key];
+    const parentComponent = this.focusableComponents[component.parentFocusKey];
+    return parentComponent;
+  }
 }
 
 /**
