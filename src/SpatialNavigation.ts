@@ -14,7 +14,6 @@ const DIRECTION_LEFT = 'left';
 const DIRECTION_RIGHT = 'right';
 const DIRECTION_UP = 'up';
 const DIRECTION_DOWN = 'down';
-const KEY_EXIT = 'exit';
 const KEY_BACK = 'back';
 const KEY_ENTER = 'enter';
 
@@ -23,7 +22,6 @@ const DEFAULT_KEY_MAP = {
   [DIRECTION_UP]: 38,
   [DIRECTION_RIGHT]: 39,
   [DIRECTION_DOWN]: 40,
-  [KEY_EXIT]: 220,
   [KEY_BACK]: 27,
   [KEY_ENTER]: 13
 };
@@ -67,7 +65,6 @@ interface FocusableComponent {
   onEnterPress: (details?: KeyPressDetails) => void;
   onEnterRelease: () => void;
   onBackPress: (details?: KeyPressDetails) => void;
-  onExitPress: (details?: KeyPressDetails) => void;
   onArrowPress: (direction: string, details: KeyPressDetails) => boolean;
   onFocus: (layout: FocusableComponentLayout, details: FocusDetails) => void;
   onBlur: (layout: FocusableComponentLayout, details: FocusDetails) => void;
@@ -92,7 +89,6 @@ interface FocusableComponentUpdatePayload {
   onEnterPress: (details?: KeyPressDetails) => void;
   onEnterRelease: () => void;
   onBackPress: (details?: KeyPressDetails) => void;
-  onExitPress: (details?: KeyPressDetails) => void;
   onArrowPress: (direction: string, details: KeyPressDetails) => boolean;
   onFocus: (layout: FocusableComponentLayout, details: FocusDetails) => void;
   onBlur: (layout: FocusableComponentLayout, details: FocusDetails) => void;
@@ -628,11 +624,6 @@ class SpatialNavigationService {
           pressedKeys: this.pressedKeys
         };
 
-        if (eventType === KEY_EXIT && this.focusKey) {
-          this.onExitPress(keysDetails);
-
-          return;
-        }
         if (eventType === KEY_ENTER && this.focusKey) {
           this.onEnterPress(keysDetails);
 
@@ -767,26 +758,6 @@ class SpatialNavigationService {
 
     if (component.onBackPress) {
       component.onBackPress(keysDetails);
-    }
-  }
-
-  onExitPress(keysDetails: KeyPressDetails) {
-    const component = this.focusableComponents[this.focusKey];
-
-    if (!component) {
-      this.log('onExitPress', 'noComponent');
-
-      return;
-    }
-
-    if (!component.focusable) {
-      this.log('onExitPress', 'componentNotFocusable');
-
-      return;
-    }
-
-    if (component.onExitPress) {
-      component.onExitPress(keysDetails);
     }
   }
 
@@ -1105,7 +1076,6 @@ class SpatialNavigationService {
     onEnterPress,
     onEnterRelease,
     onBackPress,
-    onExitPress,
     onArrowPress,
     onFocus,
     onBlur,
@@ -1125,7 +1095,6 @@ class SpatialNavigationService {
       onEnterPress,
       onEnterRelease,
       onBackPress,
-      onExitPress,
       onArrowPress,
       onFocus,
       onBlur,

@@ -62,7 +62,6 @@ export interface UseFocusableConfig<P = object> {
   onEnterPress?: EnterPressHandler<P>;
   onEnterRelease?: EnterReleaseHandler<P>;
   onBackPress?: BackPressHandler<P>;
-  onExitPress?: ExitPressHandler<P>;
   onArrowPress?: ArrowPressHandler<P>;
   onFocus?: FocusHandler<P>;
   onBlur?: BlurHandler<P>;
@@ -93,7 +92,6 @@ const useFocusableHook = <P>({
   onEnterPress = noop,
   onEnterRelease = noop,
   onBackPress = noop,
-  onExitPress = noop,
   onArrowPress = () => true,
   onFocus = noop,
   onBlur = noop,
@@ -115,13 +113,6 @@ const useFocusableHook = <P>({
       onBackPress(extraProps, details);
     },
     [extraProps, onBackPress]
-  );
-
-  const onExitPressHandler = useCallback(
-    (details: KeyPressDetails) => {
-      onExitPress(extraProps, details);
-    },
-    [extraProps, onExitPress]
   );
 
   const onArrowPressHandler = useCallback(
@@ -174,7 +165,6 @@ const useFocusableHook = <P>({
       onEnterPress: onEnterPressHandler,
       onEnterRelease: onEnterReleaseHandler,
       onBackPress: onBackPressHandler,
-      onExitPress: onExitPressHandler,
       onArrowPress: onArrowPressHandler,
       onFocus: onFocusHandler,
       onBlur: onBlurHandler,
@@ -218,7 +208,6 @@ const useFocusableHook = <P>({
     onEnterPressHandler,
     onEnterReleaseHandler,
     onBackPressHandler,
-    onExitPressHandler,
     onArrowPressHandler,
     onFocusHandler,
     onBlurHandler

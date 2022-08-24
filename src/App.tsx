@@ -151,7 +151,6 @@ function Menu({ focusKey: focusKeyParam }: MenuProps) {
     onEnterPress: () => {},
     onEnterRelease: () => {},
     onBackPress: () => {},
-    onExitPress: () => {},
     onArrowPress: () => true,
     onFocus: () => {},
     onBlur: () => {},
